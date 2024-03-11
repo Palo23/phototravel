@@ -90,7 +90,7 @@ const IndexPage = () => {
           </label>
           <input id="file-upload" type="file" accept="image/*" multiple className="hidden" onChange={handleFileChange} />
         </div>
-        {selectedImages?.length > 0 && (
+        {!uploading && !loading && selectedImages?.length > 0 && (
             <button className="w-full p-4 text-center mb-4 border rounded-lg bg-blue-400 text-white" onClick={onSubmit}>
               Subir las fotos seleccionadas (puedes revisarlas y confirmar abajo)
             </button>
@@ -124,7 +124,7 @@ const IndexPage = () => {
           </div>
         </div>
         <div className="flex-flex-col pb-4">
-        {selectedImages?.length > 0 && (
+        {!uploading && !loading && selectedImages?.length > 0 && (
             <button className="w-full p-4 text-center mb-4 border rounded-lg bg-blue-400 text-white" onClick={onSubmit}>
               Subir las fotos seleccionadas
             </button>
