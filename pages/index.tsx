@@ -10,6 +10,10 @@ const IndexPage = () => {
   const [loading, setLoading] = useState(false);
   const [selectedImages, setSelectedImages] = useState<any>([]);
 
+  const removeImage = (index: number) => {
+    setSelectedImages(prevImages => prevImages.filter((_, i) => i !== index));
+  }
+
   const handleFileChange = async (event: any) => {
     const files: FileList = event.target.files;
     if (files.length > 10) {
@@ -112,14 +116,18 @@ const IndexPage = () => {
         <div className="flex justify-center items-center gap-2 p-4">
           <div className="flex flex-col w-full h-full">
             {selectedImages.map((image, index) => (
-              <Image
-                key={index}
-                className="w-full h-full object-cover mb-4"
-                src={image?.base64}
-                alt={`Imagen ${index + 1}`}
-                width={100}
-                height={100}
-              />
+                <div className="relative group" key={index} onClick={() => removeImage(index)}>
+                <Image
+                  className="w-full h-full object-cover mb-4 hover:opacity-50 transition-opacity duration-300"
+                  src={image?.base64}
+                  alt={`Imagen ${index + 1}`}
+                  width={100}
+                  height={100}
+                />
+                <span
+                  className="absolute material-icons top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 text-red-500 text-[56px] cursor-pointer"
+                >delete</span>
+              </div>
             ))}
           </div>
         </div>

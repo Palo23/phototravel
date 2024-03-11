@@ -3,7 +3,7 @@ import { AppProps } from 'next/app'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import '../styles/index.css'
+import '../styles/index.scss'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
