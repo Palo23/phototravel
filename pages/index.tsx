@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { BeatLoader, CircleLoader, ClimbingBoxLoader, RingLoader } from 'react-spinners';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { MdAddCircleOutline, MdDelete, MdOutlineFileUpload } from "react-icons/md";
 
 const swal = withReactContent(Swal)
 
@@ -107,7 +108,7 @@ const IndexPage = () => {
             Presiona el botón de abajo para seleccionar tus fotos, de ser posible, selecciona fotos de 10 en 10 para no ralentizar el proceso de carga
           </p>
           <label htmlFor="file-upload" className="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded text-center flex items-center justify-center">
-            <span className="material-icons mx-2">add</span> Agrega tus fotos
+            <MdAddCircleOutline className='text-[24px] mr-2' /> Agrega tus fotos
           </label>
           <input id="file-upload" type="file" accept="image/*" multiple className="hidden" onChange={handleFileChange} />
         </div>
@@ -134,7 +135,7 @@ const IndexPage = () => {
                     <RingLoader color="#FFD700" />
                   ) : (
                     <div className="flex items-center justify-center">
-                      <span className="material-icons mx-2">upload</span> Subir las fotos
+                      <MdOutlineFileUpload /> Subir las fotos
                     </div>
                   )
                 }
@@ -159,9 +160,9 @@ const IndexPage = () => {
                       src={image?.base64}
                       alt={`Imagen ${index + 1}`}
                     />
-                    <span
-                      className="absolute material-icons top-1 right-1 text-red-500 text-[32px] cursor-pointer"
-                    >delete</span>
+                    <div
+                      className="absolute top-1 right-1 text-red-500 text-[32px] cursor-pointer"
+                    ><MdDelete /></div>
                   </div>
                 )
             ))}
@@ -182,7 +183,7 @@ const IndexPage = () => {
                     <RingLoader color="#FFD700" />
                   ) : (
                     <div className="flex items-center justify-center">
-                      <span className="material-icons mx-2">upload</span> Subir las fotos
+                      <MdOutlineFileUpload /> Subir las fotos
                     </div>
                   )
                 }
