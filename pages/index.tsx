@@ -4,7 +4,11 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { fileToBase64URL, resizeImage, uploadPicturoToImageKit } from '../utils/utils';
 import Head from 'next/head';
-import { BeatLoader, CircleLoader, ClimbingBoxLoader } from 'react-spinners';
+import { BeatLoader, CircleLoader, ClimbingBoxLoader, RingLoader } from 'react-spinners';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const swal = withReactContent(Swal)
 
 const IndexPage = () => {
   const [uploading, setUploading] = useState(false);
@@ -12,7 +16,18 @@ const IndexPage = () => {
   const [selectedImages, setSelectedImages] = useState<any>([]);
 
   const removeImage = (index: number) => {
-    setSelectedImages(prevImages => prevImages.filter((_, i) => i !== index));
+    swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta imagen no será compartida si la quitas',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, quiero quitarla',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setSelectedImages(prevImages => prevImages.filter((_, i) => i !== index));
+      }
+    });
   }
 
   const handleFileChange = async (event: any) => {
@@ -50,7 +65,7 @@ const IndexPage = () => {
   const onSubmit = async () => {
     setUploading(true);
 
-    toast.warning('Subiendo tus fotos, esto puede tardar un momento, por favor espera');
+    toast.warning('Compartiendo tus fotos, esto puede tardar un momento, por favor espera');
 
     for (const img of selectedImages) {
       try {
@@ -62,7 +77,7 @@ const IndexPage = () => {
       }
     }
 
-    toast.success('Tus fotos han sido subidas correctamente, muchas gracias por compartir tus fotos con nosotros!');
+    toast.success('Se han subido correctamente, muchas gracias por compartir tus fotos con nosotros!');
     setSelectedImages([]);
 
     setUploading(false);
@@ -99,7 +114,7 @@ const IndexPage = () => {
         {
           loading ? (
             <div className="flex items-center justify-center p-8">
-              <BeatLoader color="#36d7b7" />
+              <RingLoader color="#FFD700" />
             </div>
           ) : (
             <>
@@ -116,7 +131,7 @@ const IndexPage = () => {
               >
                 {
                   uploading ? (
-                    <CircleLoader color="#36d7b7" />
+                    <RingLoader color="#FFD700" />
                   ) : (
                     <div className="flex items-center justify-center">
                       <span className="material-icons mx-2">upload</span> Subir las fotos
@@ -126,7 +141,7 @@ const IndexPage = () => {
               </button>
 
               <p className="text-lg text-center text-gray-500">
-              Puedes eliminar las fotos que no quieras subir haciendo click sobre ellas o sobre el ícono del basurero
+              Puedes quitar las fotos que no quieras compartir haciendo click sobre ellas o sobre el ícono del basurero
               </p>
             </div>
           )
@@ -136,7 +151,7 @@ const IndexPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-2">
             {selectedImages.map((image, index) => (
                 uploading ? (
-                  <ClimbingBoxLoader color="#36d7b7" />
+                  <RingLoader color="#FFD700" />
                 ) : (
                   <div className="relative" key={index} onClick={() => removeImage(index)}>
                     <img
@@ -164,7 +179,7 @@ const IndexPage = () => {
               onClick={onSubmit}>
                 {
                   uploading ? (
-                    <CircleLoader color="#36d7b7" />
+                    <RingLoader color="#FFD700" />
                   ) : (
                     <div className="flex items-center justify-center">
                       <span className="material-icons mx-2">upload</span> Subir las fotos

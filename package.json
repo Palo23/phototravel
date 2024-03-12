@@ -15,7 +15,9 @@
     "react-dom": "^18.2.0",
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.4",
-    "sass": "^1.71.1"
+    "sass": "^1.71.1",
+    "sweetalert2": "^11.10.6",
+    "sweetalert2-react-content": "^5.0.7"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",
