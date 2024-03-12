@@ -12,7 +12,6 @@ async function resizeImage(file: any) {
   }
   try {
       const compressedFile = await imageCompression(file, options)
-      console.log('compressedFile instanceof Blob', compressedFile) // true
       return compressedFile
   } catch (error) {
       console.error(error)
@@ -21,8 +20,8 @@ async function resizeImage(file: any) {
 }
 
 const fileToBase64URL = async (file: any) => {
-  const maxFileSize = 8
-  const maxCompressionSize = 1.5
+  const maxFileSize = 20
+  const maxCompressionSize = 2.5
 
   const _imageSize = file.size / 1024 / 1024
 

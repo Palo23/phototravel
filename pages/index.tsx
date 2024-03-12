@@ -28,7 +28,7 @@ const IndexPage = () => {
       try {
         _base64 = await fileToBase64URL(file);
       } catch (err) {
-        console.error(err);
+        setLoading(false);
         toast.error('Hubo un error al convertir la imagen a base64');
         return;
       }
@@ -62,6 +62,7 @@ const IndexPage = () => {
     }
 
     toast.success('Tus fotos han sido subidas correctamente, muchas gracias por compartir tus fotos con nosotros!');
+    setSelectedImages([]);
 
     setUploading(false);
   };
@@ -73,8 +74,8 @@ const IndexPage = () => {
       <meta name="description" content="Sube tus fotos" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <div className='p-5'>
-      <div className="flex flex-col h-screen">
+    <div className=''>
+      <div className="flex flex-col min-h-screen">
         <div className="flex flex-col justify-center items-center p-4 space-y-2">
           <p className="text-4xl font-bold text-center">
             Bienvenido a la página de subida de fotos
@@ -94,63 +95,46 @@ const IndexPage = () => {
           </label>
           <input id="file-upload" type="file" accept="image/*" multiple className="hidden" onChange={handleFileChange} />
         </div>
-        {!uploading && !loading && selectedImages?.length > 0 && (
+        <div className="flex flex-col px-5">
+        {
+          !uploading && !loading && selectedImages?.length > 0 && (
             <button className="w-full p-4 text-center mb-4 border rounded-lg bg-blue-400 text-white" onClick={onSubmit}>
-              Subir las fotos seleccionadas (puedes revisarlas y confirmar abajo)
+              Subir las fotos
             </button>
-          )}
-          {loading && (
-            <div className="flex justify-center items-center p-4">
-              <button className="w-full p-4 text-center mb-4 border rounded-lg bg-blue-400 text-white disabled">
-                Cargando tus fotos seleccionadas...
-              </button>
-            </div>
-          )}
-          {uploading && (
-            <div className="flex justify-center items-center p-4">
-              <button className="w-full p-4 text-center mb-4 border rounded-lg bg-blue-400 text-white disabled">
-                Subiendo...
-              </button>
-            </div>
-          )}
-        <div className="flex justify-center items-center gap-2 p-4">
-          <div className="flex flex-col w-full h-full">
+          )
+        }
+        {
+          !uploading && !loading && selectedImages?.length > 0 && (
+            <p className="text-lg text-center text-gray-500">
+              Puedes eliminar las fotos que no quieras subir haciendo click sobre ellas o sobre el ícono del basurero
+            </p>
+          )
+        }
+        </div>
+        <div className="p-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-2">
             {selectedImages.map((image, index) => (
-                <div className="relative group" key={index} onClick={() => removeImage(index)}>
-                <Image
-                  className="w-full h-full object-cover mb-4 hover:opacity-50 transition-opacity duration-300"
+              <div className="relative" key={index} onClick={() => removeImage(index)}>
+                <img
+                  className="w-full h-full object-contain rounded-lg"
                   src={image?.base64}
                   alt={`Imagen ${index + 1}`}
-                  width={100}
-                  height={100}
                 />
                 <span
-                  className="absolute material-icons top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 text-red-500 text-[56px] cursor-pointer"
+                  className="absolute material-icons top-1 right-1 text-red-500 text-[32px] cursor-pointer"
                 >delete</span>
               </div>
             ))}
           </div>
         </div>
-        <div className="flex-flex-col pb-4">
-        {!uploading && !loading && selectedImages?.length > 0 && (
+        <div className="flex-flex-col pb-4 px-5">
+        {
+          !uploading && !loading && selectedImages?.length > 0 && (
             <button className="w-full p-4 text-center mb-4 border rounded-lg bg-blue-400 text-white" onClick={onSubmit}>
-              Subir las fotos seleccionadas
+              Subir las fotos
             </button>
-          )}
-          {loading && (
-            <div className="flex justify-center items-center p-4">
-              <button className="w-full p-4 text-center mb-4 border rounded-lg bg-blue-400 text-white disabled">
-                Cargando tus fotos seleccionadas...
-              </button>
-            </div>
-          )}
-          {uploading && (
-            <div className="flex justify-center items-center p-4">
-              <button className="w-full p-4 text-center mb-4 border rounded-lg bg-blue-400 text-white disabled">
-                Subiendo...
-              </button>
-            </div>
-          )}
+          )
+        }
         </div>
       </div>
     </div>
