@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { fileToBase64URL, resizeImage, uploadPicturoToImageKit } from '../utils/utils';
 import Head from 'next/head';
+import { BeatLoader, CircleLoader, ClimbingBoxLoader } from 'react-spinners';
 
 const IndexPage = () => {
   const [uploading, setUploading] = useState(false);
@@ -90,52 +91,94 @@ const IndexPage = () => {
           >
             Presiona el botón de abajo para seleccionar tus fotos, de ser posible, selecciona fotos de 10 en 10 para no ralentizar el proceso de carga
           </p>
-          <label htmlFor="file-upload" className="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded text-center">
-            Selecciona acá tus fotos
+          <label htmlFor="file-upload" className="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded text-center flex items-center justify-center">
+            <span className="material-icons mx-2">add</span> Agrega tus fotos
           </label>
           <input id="file-upload" type="file" accept="image/*" multiple className="hidden" onChange={handleFileChange} />
         </div>
-        <div className="flex flex-col px-5">
         {
-          !uploading && !loading && selectedImages?.length > 0 && (
-            <button className="w-full p-4 text-center mb-4 border rounded-lg bg-blue-400 text-white" onClick={onSubmit}>
-              Subir las fotos
-            </button>
-          )
-        }
+          loading ? (
+            <div className="flex items-center justify-center p-8">
+              <BeatLoader color="#36d7b7" />
+            </div>
+          ) : (
+            <>
+              <div className="flex flex-col px-5">
         {
-          !uploading && !loading && selectedImages?.length > 0 && (
-            <p className="text-lg text-center text-gray-500">
+          selectedImages?.length > 0 && (
+            <div className="flex flex-col space-y-2">
+              <button 
+                className={`w-full p-3 text-center mb-4 border rounded-lg bg-blue-400 text-white flex items-center justify-center
+                  ${uploading ? 'cursor-not-allowed' : 'cursor-pointer'}
+                `} 
+                disabled={uploading}
+                onClick={onSubmit}
+              >
+                {
+                  uploading ? (
+                    <CircleLoader color="#36d7b7" />
+                  ) : (
+                    <div className="flex items-center justify-center">
+                      <span className="material-icons mx-2">upload</span> Subir las fotos
+                    </div>
+                  )
+                }
+              </button>
+
+              <p className="text-lg text-center text-gray-500">
               Puedes eliminar las fotos que no quieras subir haciendo click sobre ellas o sobre el ícono del basurero
-            </p>
+              </p>
+            </div>
           )
         }
         </div>
         <div className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-2">
             {selectedImages.map((image, index) => (
-              <div className="relative" key={index} onClick={() => removeImage(index)}>
-                <img
-                  className="w-full h-full object-contain rounded-lg"
-                  src={image?.base64}
-                  alt={`Imagen ${index + 1}`}
-                />
-                <span
-                  className="absolute material-icons top-1 right-1 text-red-500 text-[32px] cursor-pointer"
-                >delete</span>
-              </div>
+                uploading ? (
+                  <ClimbingBoxLoader color="#36d7b7" />
+                ) : (
+                  <div className="relative" key={index} onClick={() => removeImage(index)}>
+                    <img
+                      className="w-full h-full object-contain rounded-lg"
+                      src={image?.base64}
+                      alt={`Imagen ${index + 1}`}
+                    />
+                    <span
+                      className="absolute material-icons top-1 right-1 text-red-500 text-[32px] cursor-pointer"
+                    >delete</span>
+                  </div>
+                )
             ))}
           </div>
         </div>
         <div className="flex-flex-col pb-4 px-5">
         {
-          !uploading && !loading && selectedImages?.length > 0 && (
-            <button className="w-full p-4 text-center mb-4 border rounded-lg bg-blue-400 text-white" onClick={onSubmit}>
-              Subir las fotos
-            </button>
+          selectedImages?.length > 0 && (
+            <div className="flex flex-col space-y-2">
+              <button 
+              className={`w-full p-3 text-center mb-4 border rounded-lg bg-blue-400 text-white flex items-center justify-center
+                ${uploading ? 'cursor-not-allowed' : 'cursor-pointer'}
+              `} 
+              disabled={uploading}
+              onClick={onSubmit}>
+                {
+                  uploading ? (
+                    <CircleLoader color="#36d7b7" />
+                  ) : (
+                    <div className="flex items-center justify-center">
+                      <span className="material-icons mx-2">upload</span> Subir las fotos
+                    </div>
+                  )
+                }
+              </button>
+            </div>
           )
         }
         </div>
+            </>
+          )
+        } 
       </div>
     </div>
   </>
