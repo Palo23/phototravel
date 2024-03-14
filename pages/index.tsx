@@ -19,11 +19,15 @@ const IndexPage = () => {
   const removeImage = (index: number) => {
     swal.fire({
       title: '¿Estás seguro?',
+      color: '#164e63',
       text: 'Esta imagen no será compartida si la quitas',
       icon: 'warning',
+      iconColor: '#F39C12',
       showCancelButton: true,
       confirmButtonText: 'Sí, quiero quitarla',
+      confirmButtonColor: '#374151',
       cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#ef4444',
     }).then((result) => {
       if (result.isConfirmed) {
         setSelectedImages(prevImages => prevImages.filter((_, i) => i !== index));
@@ -91,23 +95,23 @@ const IndexPage = () => {
       <meta name="description" content="Sube tus fotos" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <div className=''>
+    <div className='bg-zinc-100'>
       <div className="flex flex-col min-h-screen">
-        <div className="flex flex-col justify-center items-center p-4 space-y-2">
-          <p className="text-4xl font-bold text-center">
-            Bienvenido a la página de subida de fotos
+        <div className="flex flex-col justify-center items-center p-4 space-y-5">
+          <p className="text-4xl font-bold text-center text-blue-900">
+            Bienvenido
           </p>
           <p 
-            className="text-xl font-light text-center"
+            className="text-xl font-medium text-center text-cyan-900"
           >
-            Acá podrás compartir con nosotros los mejores momentos que captaste en nuestra boda
+            Acá podrás compartir con nosotros los mejores momentos que capturaste en nuestra boda
           </p>
           <p
-            className="text-lg font-light text-center"
+            className="text-lg font-medium text-center text-cyan-900"
           >
-            Presiona el botón de abajo para seleccionar tus fotos, de ser posible, selecciona fotos de 10 en 10 para no ralentizar el proceso de carga
+            Presiona el botón de abajo para seleccionar las fotos (Puedes agregar 10 fotos a la vez, si quieres subir más, repite el proceso)
           </p>
-          <label htmlFor="file-upload" className="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded text-center flex items-center justify-center">
+          <label htmlFor="file-upload" className="cursor-pointer bg-gray-700 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center">
             <MdAddCircleOutline className='text-[24px] mr-2' /> Agrega tus fotos
           </label>
           <input id="file-upload" type="file" accept="image/*" multiple className="hidden" onChange={handleFileChange} />
@@ -115,7 +119,7 @@ const IndexPage = () => {
         {
           loading ? (
             <div className="flex items-center justify-center p-8">
-              <RingLoader color="#FFD700" />
+              <RingLoader color="#F39C12" />
             </div>
           ) : (
             <>
@@ -123,49 +127,54 @@ const IndexPage = () => {
         {
           selectedImages?.length > 0 && (
             <div className="flex flex-col space-y-2">
-              <button 
-                className={`w-full p-3 text-center mb-4 border rounded-lg bg-blue-400 text-white flex items-center justify-center
-                  ${uploading ? 'cursor-not-allowed' : 'cursor-pointer'}
-                `} 
-                disabled={uploading}
-                onClick={onSubmit}
-              >
-                {
-                  uploading ? (
-                    <RingLoader color="#FFD700" />
-                  ) : (
+              {
+                !uploading && (
+                  <button 
+                    className={`w-full cursor-pointer bg-gray-700 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center
+                      ${uploading ? 'cursor-not-allowed' : 'cursor-pointer'}
+                    `} 
+                    disabled={uploading}
+                    onClick={onSubmit}
+                  >
                     <div className="flex items-center justify-center">
-                      <MdOutlineFileUpload /> Subir las fotos
+                      <MdOutlineFileUpload className="text-[24px] mr-4" /> Subir las fotos
                     </div>
-                  )
-                }
-              </button>
+                  </button>
+                )
+              }
 
-              <p className="text-lg text-center text-gray-500">
-              Puedes quitar las fotos que no quieras compartir haciendo click sobre ellas o sobre el ícono del basurero
-              </p>
+              {
+                !uploading && (
+                  <p className="text-xl font-medium text-center text-cyan-900">
+                    Si deseas quitar alguna foto puedes hacer click sobre ella o sobre el ícono del basurero
+                  </p>
+                )
+              }
             </div>
           )
         }
         </div>
         <div className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-2">
-            {selectedImages.map((image, index) => (
-                uploading ? (
-                  <RingLoader color="#FFD700" />
-                ) : (
-                  <div className="relative" key={index} onClick={() => removeImage(index)}>
-                    <img
-                      className="w-full h-full object-contain rounded-lg"
-                      src={image?.base64}
-                      alt={`Imagen ${index + 1}`}
-                    />
-                    <div
-                      className="absolute top-1 right-1 text-red-500 text-[32px] cursor-pointer"
-                    ><MdDelete /></div>
-                  </div>
-                )
-            ))}
+            {
+              uploading ? (
+              <div className="flex justify-center items-center">
+                <RingLoader color="#F39C12" />
+              </div>)
+            : (
+              selectedImages.map((image, index) => (
+                <div className="relative" key={index} onClick={() => removeImage(index)}>
+                  <img
+                    className="w-full h-full object-contain rounded-lg"
+                    src={image?.base64}
+                    alt={`Imagen ${index + 1}`}
+                  />
+                  <div
+                    className="absolute top-1 right-1 text-red-500 text-[32px] cursor-pointer"
+                  ><MdDelete /></div>
+                </div>
+              ))
+            )}
           </div>
         </div>
         <div className="flex-flex-col pb-4 px-5">
@@ -173,17 +182,17 @@ const IndexPage = () => {
           selectedImages?.length > 0 && (
             <div className="flex flex-col space-y-2">
               <button 
-              className={`w-full p-3 text-center mb-4 border rounded-lg bg-blue-400 text-white flex items-center justify-center
+              className={`w-full cursor-pointer bg-gray-700 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center
                 ${uploading ? 'cursor-not-allowed' : 'cursor-pointer'}
               `} 
               disabled={uploading}
               onClick={onSubmit}>
                 {
                   uploading ? (
-                    <RingLoader color="#FFD700" />
+                    <RingLoader color="#F39C12" />
                   ) : (
                     <div className="flex items-center justify-center">
-                      <MdOutlineFileUpload /> Subir las fotos
+                      <MdOutlineFileUpload className='text-[24px] mr-4'/> Subir las fotos
                     </div>
                   )
                 }
