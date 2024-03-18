@@ -8,3 +8,8 @@ export type User = {
   id: number;
   name: string;
 };
+
+interface PhotoDataTypes {
+  name: string;
+  url: string;
+}
