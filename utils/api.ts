@@ -12,10 +12,18 @@ const api = {
     return response;
   },
 
-  getPhotos: async () => {
-    const { data, error } = await supabase.from("photos").select("*");
-    return data;
-  },
+  getPhotos: async (name?: string) => {
+    if (name && name.trim() !== '') {
+        const { data, error } = await supabase
+            .from("photos")
+            .select("*")
+            .ilike("name", `%${name}%`);
+        return data;
+    } else {
+        const { data, error } = await supabase.from("photos").select("*");
+        return data;
+    }
+},
 
   getPhotoByName: async (name: string) => {
     const { data, error } = await supabase
