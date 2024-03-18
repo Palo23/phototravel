@@ -9,7 +9,6 @@ const Photos = () => {
     const parent = useRef(null)
     const [allPhotos, setAllPhotos] = useState([]);
 
-    // Functions
     const getPhotos = async () => {
         const response = await api.getPhotos();
         if (response) setAllPhotos(response);
@@ -28,7 +27,6 @@ const Photos = () => {
         setAllPhotos((prev) => [photo, ...prev]);
     }
 
-    // Hooks
     useEffect(()=>{
         suscribeToPhotos();
         getPhotos();

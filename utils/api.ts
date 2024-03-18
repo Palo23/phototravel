@@ -21,7 +21,7 @@ const api = {
     const { data, error } = await supabase
       .from("photos")
       .select("*")
-      .eq("name", name);
+      .ilike("name", `%${name}%`);
     return data;
   },
 
