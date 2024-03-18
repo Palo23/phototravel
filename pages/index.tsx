@@ -10,6 +10,9 @@ import withReactContent from 'sweetalert2-react-content'
 import { MdAddCircleOutline, MdDelete, MdOutlineFileUpload } from "react-icons/md";
 import config from '../utils/config';
 import api from '../utils/api';
+import { FaExternalLinkAlt, FaLink } from 'react-icons/fa';
+import Link from 'next/link';
+import FloatingLink from '../components/floatingLink';
 
 const swal = withReactContent(Swal)
 
@@ -106,6 +109,7 @@ const IndexPage = () => {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <div className='bg-zinc-100'>
+      <FloatingLink href="/photos" text="Ver album de fotos" />
       <div className="flex flex-col min-h-screen">
         <div className="flex flex-col justify-center items-center p-4 space-y-5">
           <p className="text-4xl font-bold text-center text-blue-900">

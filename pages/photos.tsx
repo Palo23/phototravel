@@ -7,6 +7,7 @@ import autoAnimate from '@formkit/auto-animate'
 import Link from "next/link";
 import ReactPaginate from 'react-paginate';
 import ScrollToTopButton from "../components/scrollToTop";
+import FloatingLink from "../components/floatingLink";
 
 const Photos = () => {
     const parent = useRef(null)
@@ -95,6 +96,7 @@ const Photos = () => {
                 <meta name="description" content="Album de fotos de Abby y Luis" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <FloatingLink href="/" text="Ir a la subida de fotos" />
             <div className="p-4">
                 <h1 className="text-5xl font-bold text-center text-blue-900 py-5">Album de fotos</h1>
                 <div className="flex justify-center items-center py-4">
