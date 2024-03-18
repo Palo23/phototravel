@@ -8,7 +8,6 @@ const supabase = createClient(
 interface PhotoDataTypes {
     name: string,
     url: string,
-    date: string
 }
 
 const api = {

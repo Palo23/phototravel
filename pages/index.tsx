@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { MdAddCircleOutline, MdDelete, MdOutlineFileUpload } from "react-icons/md";
 import config from '../utils/config';
+import api from '../utils/api';
 
 const swal = withReactContent(Swal)
 
@@ -16,6 +17,7 @@ const IndexPage = () => {
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedImages, setSelectedImages] = useState<any>([]);
+  const [username, setUsername] = useState('');
 
   const removeImage = (index: number) => {
     swal.fire({
@@ -75,7 +77,14 @@ const IndexPage = () => {
 
     for (const img of selectedImages) {
       try {
-        const response = await uploadPicturoToImageKit(img.base64, img.type, img.name);
+        const response: any = await uploadPicturoToImageKit(img.base64, img.type, img.name);
+
+        const imageUrl = response;
+
+        await api.postPhoto({
+          url: imageUrl,
+          name: username || 'Anónimo',
+        });
       } catch (error) {
         toast.error('Error subiendo tus fotos, por favor intenta de nuevo');
         setUploading(false);
@@ -107,6 +116,9 @@ const IndexPage = () => {
           >
             Acá podrás compartir con nosotros los mejores momentos que capturaste en nuestra boda
           </p>
+          <p className='text-xl font-medium text-center text-cyan-900'>
+            También puedes ver las fotos que los demás han compartido, presionando <a href="/photos" className="text-blue-900">aquí</a>
+          </p>
           <p
             className="text-lg font-medium text-center text-cyan-900"
           >
@@ -130,17 +142,26 @@ const IndexPage = () => {
             <div className="flex flex-col space-y-2">
               {
                 !uploading && (
-                  <button 
-                    className={`w-full cursor-pointer bg-gray-700 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center
-                      ${uploading ? 'cursor-not-allowed' : 'cursor-pointer'}
-                    `} 
-                    disabled={uploading}
-                    onClick={onSubmit}
-                  >
-                    <div className="flex items-center justify-center">
-                      <MdOutlineFileUpload className="text-[24px] mr-4" /> Subir las fotos
-                    </div>
-                  </button>
+                  <div className="flex flex-col justify-center items-center space-y-5">
+                    <input 
+                      type="text" 
+                      placeholder='Ingresa tu nombre para que podamos identificar tus fotos' 
+                      className='w-full md:w-1/2 lg:w-1/3 p-4 border border-cyan-900 text-cyan-900 rounded-lg' 
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <button 
+                      className={`w-full cursor-pointer bg-gray-700 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center
+                        ${uploading ? 'cursor-not-allowed' : 'cursor-pointer'}
+                      `} 
+                      disabled={uploading}
+                      onClick={onSubmit}
+                    >
+                      <div className="flex items-center justify-center">
+                        <MdOutlineFileUpload className="text-[24px] mr-4" /> Subir las fotos
+                      </div>
+                    </button>
+                  </div>
                 )
               }
 
