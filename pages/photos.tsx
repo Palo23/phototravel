@@ -12,6 +12,7 @@ const Photos = () => {
     const parent = useRef(null)
     const [allPhotos, setAllPhotos] = useState([]);
     const [query, setQuery] = useState('')
+    const [debouncedQuery, setDebouncedQuery] = useState('');
     const PER_PAGE = 20;
 
     const [currentPage, setCurrentPage] = useState(0);
@@ -49,9 +50,19 @@ const Photos = () => {
     }, []);
 
     useEffect(() => {
-        setCurrentPage(0);
-        getPhotos(query);
+        const handler = setTimeout(() => {
+            setDebouncedQuery(query);
+        }, 500);
+    
+        return () => {
+            clearTimeout(handler);
+        };
     }, [query]);
+
+    useEffect(() => {
+        setCurrentPage(0);
+        getPhotos(debouncedQuery);
+    }, [debouncedQuery]);
 
     useEffect(() => {
         parent.current && autoAnimate(parent.current)
