@@ -7,7 +7,7 @@ import '../styles/index.scss'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div>
+    <div className='bg-zinc-100'>
       <Component {...pageProps} />
       <ToastContainer />
     </div>

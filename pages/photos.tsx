@@ -28,7 +28,7 @@ const Photos = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="p-4">
-                <h1 className="text-4xl mb-4">Album de fotos</h1>
+                <h1 className="text-5xl font-bold text-center text-blue-900 py-5">Album de fotos</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {allPhotos?.map((photo: any, index: number) => (
                         <div key={index} className="relative group overflow-hidden">
