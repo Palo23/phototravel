@@ -5,11 +5,20 @@ import moment from "moment";
 import { PhotoDataTypes } from "../interfaces";
 import autoAnimate from '@formkit/auto-animate'
 import Link from "next/link";
+import ReactPaginate from 'react-paginate';
+import ScrollToTopButton from "../components/scrollToTop";
 
 const Photos = () => {
     const parent = useRef(null)
     const [allPhotos, setAllPhotos] = useState([]);
     const [query, setQuery] = useState('')
+    const PER_PAGE = 20;
+
+    const [currentPage, setCurrentPage] = useState(0);
+
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage);
+    }
 
     const getPhotos = async (query: string) => {
         const response = await api.getPhotos(query);
@@ -29,6 +38,7 @@ const Photos = () => {
     }
     
     useEffect(() => {
+        setCurrentPage(0);
         const unsubscribe = suscribeToPhotos(query);
         return unsubscribe;
     }, [query]);
@@ -39,12 +49,31 @@ const Photos = () => {
     }, []);
 
     useEffect(() => {
+        setCurrentPage(0);
         getPhotos(query);
     }, [query]);
 
     useEffect(() => {
         parent.current && autoAnimate(parent.current)
       }, [parent])
+      
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [currentPage]);
+
+    const offset = currentPage * PER_PAGE;
+
+    const currentPageData = allPhotos.slice(offset, offset + PER_PAGE).map((photo: any, index: number) => (
+        <Link key={index} className="relative group overflow-hidden" href={photo.url} target="_blank">
+            <img className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src={photo.url} alt={photo.name} />
+            <div className="absolute bottom-0 left-0 w-full p-2 bg-black bg-opacity-60 text-white text-sm transition-transform transform group-hover:-translate-y-4">
+                <p>{photo.name || "Anónimo"}</p>
+                <p>{moment(photo.created_at).format("DD/MM/YYYY")}</p>
+            </div>
+        </Link>
+    ));
+
+    const pageCount = Math.ceil(allPhotos.length / PER_PAGE);
 
     return (
         <>
@@ -65,21 +94,24 @@ const Photos = () => {
                     />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" ref={parent}>
-                    {allPhotos?.map((photo: any, index: number) => (
-                        <Link key={index} className="relative group overflow-hidden" href={photo.url} target="_blank">
-                            <img 
-                                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" 
-                                src={photo.url} 
-                                alt={photo.name} 
-                            />
-                            <div className="absolute bottom-0 left-0 w-full p-2 bg-black bg-opacity-60 text-white text-sm transition-transform transform group-hover:-translate-y-4">
-                                <p>{photo.name || "Anónimo"}</p>
-                                <p>{moment(photo.created_at).format("DD/MM/YYYY")}</p>
-                            </div>
-                        </Link>
-                    ))}
+                    {currentPageData}
                 </div>
+                <ReactPaginate
+                    previousLabel={"← Anterior"}
+                    nextLabel={"Siguiente →"}
+                    pageCount={pageCount}
+                    onPageChange={handlePageClick}
+                    containerClassName={"flex justify-center my-8"}
+                    pageLinkClassName={"mx-1 px-4 py-4 bg-gray-700 font-semibold text-white rounded"}
+                    previousLinkClassName={"mx-1 px-4 py-4 bg-gray-700 font-semibold text-white rounded"}
+                    nextLinkClassName={"mx-1 px-4 py-4 bg-gray-700 font-semibold text-white rounded"}
+                    disabledClassName={"opacity-50 cursor-not-allowed"}
+                    activeClassName={"font-bold"}
+                    activeLinkClassName={"bg-gray-700 opacity-50"} 
+                />
             </div>
+
+            <ScrollToTopButton />
         </>
     );
 }
