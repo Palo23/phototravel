@@ -58,7 +58,9 @@ const Photos = () => {
       }, [parent])
       
     useEffect(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+            window.scrollTo(({ top: 0, behavior: 'smooth' }));
+        }, 500);
     }, [currentPage]);
 
     const offset = currentPage * PER_PAGE;
@@ -97,8 +99,6 @@ const Photos = () => {
                     {currentPageData}
                 </div>
                 <ReactPaginate
-                    previousLabel={"← Anterior"}
-                    nextLabel={"Siguiente →"}
                     pageCount={pageCount}
                     onPageChange={handlePageClick}
                     containerClassName={"flex justify-center my-8"}
