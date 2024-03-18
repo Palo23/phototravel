@@ -2,21 +2,31 @@ import { useEffect, useState } from "react";
 import api from "../utils/api";
 import Head from 'next/head';
 import moment from "moment";
+import { PhotoDataTypes } from "../interfaces";
 
 const Photos = () => {
     const [allPhotos, setAllPhotos] = useState([]);
 
     const getPhotos = async () => {
         const response = await api.getPhotos();
+        if (response) setAllPhotos(response);
+        
+    }
 
-        console.log(response)
+    const suscribeToPhotos = () => {
+        const subscription = api.suscribeToPhotos(handleNewPhoto);
 
-        if (response) {
-            setAllPhotos(response);
+        return () => {
+            subscription.unsubscribe();
         }
     }
 
-    useEffect(() => {
+    const handleNewPhoto = (photo: PhotoDataTypes) => {
+        setAllPhotos((prev) => [photo, ...prev]);
+    }
+
+    useEffect(()=>{
+        suscribeToPhotos();
         getPhotos();
     }, []);
 
@@ -24,7 +34,7 @@ const Photos = () => {
         <>
             <Head>
                 <title>Abby y Luis | Album de fotos</title>
-                <meta name="description" content="Sube tus fotos" />
+                <meta name="description" content="Album de fotos de Abby y Luis" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="p-4">
