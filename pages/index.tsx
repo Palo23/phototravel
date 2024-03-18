@@ -8,6 +8,7 @@ import { BeatLoader, CircleLoader, ClimbingBoxLoader, RingLoader } from 'react-s
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { MdAddCircleOutline, MdDelete, MdOutlineFileUpload } from "react-icons/md";
+import config from '../utils/config';
 
 const swal = withReactContent(Swal)
 
