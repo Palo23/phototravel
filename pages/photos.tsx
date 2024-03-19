@@ -96,14 +96,14 @@ const Photos = () => {
                 <meta name="description" content="Album de fotos de Abby y Luis" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <FloatingLink href="/" text="Ir a la subida de fotos" />
+            <FloatingLink href="/" text="Ir a compartir fotos" />
             <div className="p-4">
                 <h1 className="text-5xl font-bold text-center text-blue-900 py-5">Album de fotos</h1>
                 <div className="flex justify-center items-center py-4">
                     <input 
                         type="text" 
                         className="w-full p-3 border border-cyan-900 text-cyan-900 rounded-lg" 
-                        placeholder="Buscar por nombre" 
+                        placeholder="Buscar por nombre de invitado" 
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                     />
