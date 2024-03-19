@@ -109,7 +109,7 @@ const IndexPage = () => {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <div className='bg-zinc-100'>
-      <FloatingLink href="/photos" text="Ver album de fotos" />
+      <FloatingLink href="/photos" text="Ver álbum de fotos" />
       <div className="flex flex-col min-h-screen">
         <div className="flex flex-col justify-center items-center p-4 space-y-5">
           <p className="text-4xl font-bold text-center text-blue-900">

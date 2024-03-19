@@ -92,13 +92,13 @@ const Photos = () => {
     return (
         <>
             <Head>
-                <title>Abby y Luis | Album de fotos</title>
-                <meta name="description" content="Album de fotos de Abby y Luis" />
+                <title>Abby y Luis | Álbum de fotos</title>
+                <meta name="description" content="Álbum de fotos de Abby y Luis" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <FloatingLink href="/" text="Ir a compartir fotos" />
             <div className="p-4">
-                <h1 className="text-5xl font-bold text-center text-blue-900 py-5">Album de fotos</h1>
+                <h1 className="text-5xl font-bold text-center text-blue-900 py-5">Álbum de fotos</h1>
                 <div className="flex justify-center items-center py-4">
                     <input 
                         type="text" 
