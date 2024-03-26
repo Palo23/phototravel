@@ -114,13 +114,17 @@ const Photos = () => {
                 <ReactPaginate
                     pageCount={pageCount}
                     onPageChange={handlePageClick}
+                    previousLabel={"<"}
+                    nextLabel={">"}
                     containerClassName={"flex justify-center my-8"}
-                    pageLinkClassName={"mx-1 px-4 py-4 bg-gray-700 font-semibold text-white rounded"}
-                    previousLinkClassName={"mx-1 px-4 py-4 bg-gray-700 font-semibold text-white rounded"}
-                    nextLinkClassName={"mx-1 px-4 py-4 bg-gray-700 font-semibold text-white rounded"}
+                    pageLinkClassName={"mx-1 px-4 py-2 bg-gray-700 font-semibold text-white rounded"}
+                    previousLinkClassName={"mx-1 px-4 py-2 bg-gray-700 font-semibold text-white rounded"}
+                    nextLinkClassName={"mx-1 px-4 py-2 bg-gray-700 font-semibold text-white rounded"}
                     disabledClassName={"opacity-50 cursor-not-allowed"}
                     activeClassName={"font-bold"}
                     activeLinkClassName={"bg-gray-700 opacity-50"} 
+                    pageRangeDisplayed={2}
+                    marginPagesDisplayed={1}
                 />
             </div>
 
