@@ -124,7 +124,7 @@ const Photos = () => {
                     activeClassName={"font-bold"}
                     activeLinkClassName={"bg-gray-700 opacity-50"} 
                     pageRangeDisplayed={2}
-                    marginPagesDisplayed={1}
+                    marginPagesDisplayed={0}
                 />
             </div>
 
