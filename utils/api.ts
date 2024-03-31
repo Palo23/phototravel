@@ -8,40 +8,40 @@ const supabase = createClient(
 
 const api = {
   postPhoto: async (data: PhotoDataTypes) => {
-    const response = await supabase.from("photos").insert([data]);
+    const response = await supabase.from("travel").insert([data]);
     return response;
   },
 
-  getPhotos: async (name?: string) => {
+  gettravel: async (name?: string) => {
     if (name && name.trim() !== '') {
         const { data, error } = await supabase
-            .from("photos")
+            .from("travel")
             .select("*")
             .ilike("name", `%${name}%`);
         return data;
     } else {
-        const { data, error } = await supabase.from("photos").select("*");
+        const { data, error } = await supabase.from("travel").select("*");
         return data;
     }
 },
 
   getPhotoByName: async (name: string) => {
     const { data, error } = await supabase
-      .from("photos")
+      .from("travel")
       .select("*")
       .ilike("name", `%${name}%`);
     return data;
   },
 
-  suscribeToPhotos: (callback: (photos: PhotoDataTypes) => void) => {
+  suscribeTotravel: (callback: (photo: PhotoDataTypes) => void) => {
     const subscription = supabase
-      .channel("photos")
+      .channel("travel")
       .on(
         "postgres_changes",
         {
           event: "INSERT",
           schema: "public",
-          table: "photos",
+          table: "travel",
         },
         (payload) => callback(payload.new as PhotoDataTypes)
       )

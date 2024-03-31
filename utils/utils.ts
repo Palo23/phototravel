@@ -70,7 +70,7 @@ const uploadPicturoToImageKit = async (base64file: any, type: any, name: string,
                       signature: data.signature,
                       expire: data.expire,
                       token: data.token,
-                      folder: '/Wedding',
+                      folder: '/travel',
                   })
                   .then((response) => {
                       resolve(response.url)
