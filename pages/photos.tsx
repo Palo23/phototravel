@@ -82,6 +82,7 @@ const Photos = () => {
             <img className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src={photo.url} alt={photo.name} />
             <div className="absolute bottom-0 left-0 w-full p-2 bg-black bg-opacity-60 text-white text-sm transition-transform transform group-hover:-translate-y-4">
                 <p>{photo.name || "Anónimo"}</p>
+                <p>{photo.travel_name || "Desconocido"}</p>
                 <p>{moment(photo.created_at).format("DD/MM/YYYY")}</p>
             </div>
         </Link>

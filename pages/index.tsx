@@ -21,6 +21,7 @@ const IndexPage = () => {
   const [loading, setLoading] = useState(false);
   const [selectedImages, setSelectedImages] = useState<any>([]);
   const [username, setUsername] = useState('');
+  const [travelName, setTravelName] = useState('');
 
   const removeImage = (index: number) => {
     swal.fire({
@@ -87,6 +88,7 @@ const IndexPage = () => {
         await api.postPhoto({
           url: imageUrl,
           name: username || 'Anónimo',
+          travel_name: travelName || 'Desconocido',
         });
       } catch (error) {
         toast.error('Error subiendo tus fotos, por favor intentá de nuevo');
@@ -147,6 +149,13 @@ const IndexPage = () => {
               {
                 !uploading && (
                   <div className="flex flex-col justify-center items-center space-y-5">
+                    <input 
+                      type="text" 
+                      placeholder='Ingresa el nombre del viaje o del lugar que visitamos' 
+                      className='w-full md:w-1/2 lg:w-1/3 p-4 border border-cyan-900 text-amber-950 rounded-lg' 
+                      value={username}
+                      onChange={(e) => setTravelName(e.target.value)}
+                    />
                     <input 
                       type="text" 
                       placeholder='Ingresa tu nombre para que podamos identificar tus fotos' 

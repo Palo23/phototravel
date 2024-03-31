@@ -12,4 +12,5 @@ export type User = {
 interface PhotoDataTypes {
   name: string;
   url: string;
+  travel_name: string;
 }
