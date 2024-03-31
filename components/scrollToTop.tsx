@@ -27,7 +27,7 @@ const ScrollToTopButton = () => {
   return (
     <div className='fixed bottom-5 right-5'>
       {isVisible && (
-        <div className="flex justify-center items-center bg-gray-700 rounded-full py-5 w-12 h-12" onClick={scrollToTop}>
+        <div className="flex justify-center items-center bg-green-800 rounded-full py-5 w-12 h-12" onClick={scrollToTop}>
           <FaArrowUp className='text-3xl text-white cursor-pointer' />
         </div>
       )}

@@ -11,7 +11,7 @@ const FloatingLink = (props: { href: string, text: string }) => {
     return (
         <div className="relative">
             <div className="absolute top-0 right-2">
-              <div className='bg-gray-700 p-2 text-white' onClick={() => setIsButtonVisible(!isButtonVisible)}>
+              <div className='bg-green-800 p-2 text-white' onClick={() => setIsButtonVisible(!isButtonVisible)}>
                 {
                     !isButtonVisible ? <FaChevronDown className="text-2xl text-white" /> : <FaChevronUp className="text-2xl text-white" />
                 }
@@ -26,7 +26,7 @@ const FloatingLink = (props: { href: string, text: string }) => {
                         exit={{ opacity: 0, y: -50 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <Link href={href} className="bg-gray-700 rounded-lg shadow-lg p-2 text-white space-x-2 flex justify-center items-center">
+                        <Link href={href} className="bg-green-800 rounded-lg shadow-lg p-2 text-white space-x-2 flex justify-center items-center">
                             <FaExternalLinkAlt className="text-xl" />
                             <p className="text-white text-lg">{text}</p>
                         </Link>

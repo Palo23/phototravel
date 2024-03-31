@@ -12,7 +12,7 @@ const api = {
     return response;
   },
 
-  gettravel: async (name?: string) => {
+  getPhotos: async (name?: string) => {
     if (name && name.trim() !== '') {
         const { data, error } = await supabase
             .from("travel")
@@ -33,7 +33,7 @@ const api = {
     return data;
   },
 
-  suscribeTotravel: (callback: (photo: PhotoDataTypes) => void) => {
+  suscribeToPhotos: (callback: (photos: PhotoDataTypes) => void) => {
     const subscription = supabase
       .channel("travel")
       .on(

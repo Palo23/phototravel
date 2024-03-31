@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { fileToBase64URL, resizeImage, uploadPicturoToImageKit } from '../utils/utils';
 import Head from 'next/head';
-import { BeatLoader, CircleLoader, ClimbingBoxLoader, RingLoader } from 'react-spinners';
+import { BeatLoader, CircleLoader, ClimbingBoxLoader } from 'react-spinners';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { MdAddCircleOutline, MdDelete, MdOutlineFileUpload } from "react-icons/md";
@@ -26,9 +26,9 @@ const IndexPage = () => {
     swal.fire({
       title: '¿Estás seguro?',
       color: '#164e63',
-      text: 'Esta imagen no será compartida si la quitas',
+      text: 'Esta imagen no será compartida si la quitás',
       icon: 'warning',
-      iconColor: '#F39C12',
+      iconColor: '#8fbc8f',
       showCancelButton: true,
       confirmButtonText: 'Sí, quiero quitarla',
       confirmButtonColor: '#374151',
@@ -89,13 +89,13 @@ const IndexPage = () => {
           name: username || 'Anónimo',
         });
       } catch (error) {
-        toast.error('Error subiendo tus fotos, por favor intenta de nuevo');
+        toast.error('Error subiendo tus fotos, por favor intentá de nuevo');
         setUploading(false);
         return;
       }
     }
 
-    toast.success('Se han subido correctamente, muchas gracias por compartir tus fotos con nosotros!');
+    toast.success('Se han subido correctamente, ahora podés verlas en el álbum');
     setSelectedImages([]);
 
     setUploading(false);
@@ -104,7 +104,7 @@ const IndexPage = () => {
   return (
     <>
     <Head>
-      <title>Abby y Luis | Comparte tus fotos</title>
+      <title>Viajes Familiares | Fotos</title>
       <meta name="description" content="Sube tus fotos" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
@@ -112,31 +112,31 @@ const IndexPage = () => {
       <FloatingLink href="/photos" text="Ver álbum de fotos" />
       <div className="flex flex-col min-h-screen">
         <div className="flex flex-col justify-center items-center p-4 space-y-5">
-          <p className="text-4xl font-bold text-center text-blue-900">
+          <p className="text-4xl font-bold text-center text-green-700">
             Bienvenido
           </p>
           <p 
-            className="text-xl font-medium text-center text-cyan-900"
+            className="text-xl font-medium text-center text-amber-950"
           >
-            Acá podrás compartir con nosotros los mejores momentos que capturaste en nuestra boda
+            Compartí las fotos que has tomado en nuestros viajes
           </p>
-          <p className='text-xl font-medium text-center text-cyan-900'>
-            También puedes ver las fotos que los demás han compartido, presionando <a href="/photos" className="text-blue-900">aquí</a>
+          <p className='text-xl font-medium text-center text-amber-950'>
+            Podés ver las fotos presionando <a href="/photos" className="text-green-700">aquí</a>
           </p>
           <p
-            className="text-lg font-medium text-center text-cyan-900"
+            className="text-lg font-medium text-center text-amber-950"
           >
-            Presiona el botón de abajo para seleccionar las fotos (Puedes agregar 10 fotos a la vez, si quieres subir más, repite el proceso)
+            Presioná el botón de abajo para seleccionar las fotos (Podés agregar 10 fotos a la vez, si querés subir más, repetí el proceso)
           </p>
-          <label htmlFor="file-upload" className="cursor-pointer bg-gray-700 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center">
-            <MdAddCircleOutline className='text-[24px] mr-2' /> Agrega tus fotos
+          <label htmlFor="file-upload" className="cursor-pointer bg-green-800 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center">
+            <MdAddCircleOutline className='text-[24px] mr-2' /> Agregá tus fotos
           </label>
           <input id="file-upload" type="file" accept="image/*" multiple className="hidden" onChange={handleFileChange} />
         </div>
         {
           loading ? (
             <div className="flex items-center justify-center p-8">
-              <RingLoader color="#F39C12" />
+              <BeatLoader color="#8fbc8f" />
             </div>
           ) : (
             <>
@@ -150,12 +150,12 @@ const IndexPage = () => {
                     <input 
                       type="text" 
                       placeholder='Ingresa tu nombre para que podamos identificar tus fotos' 
-                      className='w-full md:w-1/2 lg:w-1/3 p-4 border border-cyan-900 text-cyan-900 rounded-lg' 
+                      className='w-full md:w-1/2 lg:w-1/3 p-4 border border-cyan-900 text-amber-950 rounded-lg' 
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                     />
                     <button 
-                      className={`w-full cursor-pointer bg-gray-700 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center
+                      className={`w-full cursor-pointer bg-green-800 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center
                         ${uploading ? 'cursor-not-allowed' : 'cursor-pointer'}
                       `} 
                       disabled={uploading}
@@ -171,7 +171,7 @@ const IndexPage = () => {
 
               {
                 !uploading && (
-                  <p className="text-xl font-medium text-center text-cyan-900">
+                  <p className="text-xl font-medium text-center text-amber-950">
                     Si deseas quitar alguna foto puedes hacer click sobre ella o sobre el ícono del basurero
                   </p>
                 )
@@ -185,7 +185,7 @@ const IndexPage = () => {
             {
               uploading ? (
               <div className="flex justify-center items-center">
-                <RingLoader color="#F39C12" />
+                <BeatLoader color="#8fbc8f" />
               </div>)
             : (
               selectedImages.map((image, index) => (
@@ -208,14 +208,14 @@ const IndexPage = () => {
           selectedImages?.length > 0 && (
             <div className="flex flex-col space-y-2">
               <button 
-              className={`w-full cursor-pointer bg-gray-700 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center
+              className={`w-full cursor-pointer bg-green-800 font-semibold text-white py-4 px-4 rounded-lg text-center flex items-center justify-center
                 ${uploading ? 'cursor-not-allowed' : 'cursor-pointer'}
               `} 
               disabled={uploading}
               onClick={onSubmit}>
                 {
                   uploading ? (
-                    <RingLoader color="#F39C12" />
+                    <BeatLoader color="#8fbc8f" />
                   ) : (
                     <div className="flex items-center justify-center">
                       <MdOutlineFileUpload className='text-[24px] mr-4'/> Subir las fotos
