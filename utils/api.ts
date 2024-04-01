@@ -17,7 +17,7 @@ const api = {
         const { data, error } = await supabase
             .from("travel")
             .select("*")
-            .ilike("name", `%${name}%`);
+            .filter("name", "ilike", `%${name}%`)
         return data;
     } else {
         const { data, error } = await supabase.from("travel").select("*");
@@ -30,6 +30,14 @@ const api = {
       .from("travel")
       .select("*")
       .ilike("name", `%${name}%`);
+    return data;
+  },
+
+  getPhotoByTravelName: async (travelName: string) => {
+    const { data, error } = await supabase
+      .from("travel")
+      .select("*")
+      .eq("travel_name", travelName);
     return data;
   },
 
@@ -48,6 +56,21 @@ const api = {
       .subscribe();
     return subscription;
   },
+
+  getTravelNames: async () => {
+    const { data, error } = await supabase
+      .from("travel")
+      .select("travel_name");
+
+    if (error) {
+        console.error(error);
+        return [];
+    }
+
+    const uniqueTravelNames = Array.from(new Set(data.map(item => item.travel_name)));
+
+    return uniqueTravelNames;
+  }
 };
 
 export default api;

@@ -14,9 +14,10 @@ const Photos = () => {
     const [allPhotos, setAllPhotos] = useState([]);
     const [query, setQuery] = useState('')
     const [debouncedQuery, setDebouncedQuery] = useState('');
-    const PER_PAGE = 20;
-
+    const [travelNames, setTravelNames] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
+    const [selectedTravelName, setSelectedTravelName] = useState('');
+    const PER_PAGE = 20;
 
     function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage);
@@ -38,6 +39,26 @@ const Photos = () => {
             subscription.unsubscribe();
         }
     }
+
+    useEffect(() => {
+        const fetchPhotos = async () => {
+            if (selectedTravelName) {
+                const photos = await api.getPhotoByTravelName(selectedTravelName);
+                setAllPhotos(photos);
+            }
+        };
+    
+        fetchPhotos();
+    }, [selectedTravelName]);
+
+    useEffect(() => {
+        const fetchTravelNames = async () => {
+            const names = await api.getTravelNames();
+            setTravelNames(names);
+        };
+    
+        fetchTravelNames();
+    }, []);
     
     useEffect(() => {
         setCurrentPage(0);
@@ -100,7 +121,16 @@ const Photos = () => {
             <FloatingLink href="/" text="Ir a compartir fotos" />
             <div className="p-4">
                 <h1 className="text-5xl font-bold text-center text-green-700 py-5">Álbum de fotos</h1>
-                <div className="flex justify-center items-center py-4">
+                <div className="flex flex-col justify-center items-center py-4 space-y-2">
+                    <select 
+                    value={selectedTravelName}
+                    onChange={(e) => setSelectedTravelName(e.target.value)}
+                    className="w-full p-3 border border-cyan-900 text-amber-950 rounded-lg">
+                        <option value="">Seleccionar viaje</option>
+                        {travelNames.map((name, index) => (
+                            <option key={index} value={name}>{name}</option>
+                        ))}
+                    </select>
                     <input 
                         type="text" 
                         className="w-full p-3 border border-cyan-900 text-amber-950 rounded-lg" 
