@@ -139,6 +139,21 @@ const Photos = () => {
                         onChange={(e) => setQuery(e.target.value)}
                     />
                 </div>
+                <ReactPaginate
+                    pageCount={pageCount}
+                    onPageChange={handlePageClick}
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    containerClassName={"grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 px-10 justify-center my-8"}
+                    pageLinkClassName={"mx-1 px-4 py-2 bg-green-800 font-semibold text-white rounded"}
+                    previousLinkClassName={"mx-1 px-4 py-2 bg-green-800 font-semibold text-white rounded"}
+                    nextLinkClassName={"mx-1 px-4 py-2 bg-green-800 font-semibold text-white rounded"}
+                    disabledClassName={"opacity-50 cursor-not-allowed"}
+                    activeClassName={"font-bold"}
+                    activeLinkClassName={"bg-green-800 opacity-50"} 
+                    pageRangeDisplayed={2}
+                    marginPagesDisplayed={1}
+                />
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" ref={parent}>
                     {currentPageData}
                 </div>
@@ -147,7 +162,7 @@ const Photos = () => {
                     onPageChange={handlePageClick}
                     previousLabel={"<"}
                     nextLabel={">"}
-                    containerClassName={"flex justify-center my-8"}
+                    containerClassName={"grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 px-10 justify-center my-8"}
                     pageLinkClassName={"mx-1 px-4 py-2 bg-green-800 font-semibold text-white rounded"}
                     previousLinkClassName={"mx-1 px-4 py-2 bg-green-800 font-semibold text-white rounded"}
                     nextLinkClassName={"mx-1 px-4 py-2 bg-green-800 font-semibold text-white rounded"}
@@ -155,7 +170,7 @@ const Photos = () => {
                     activeClassName={"font-bold"}
                     activeLinkClassName={"bg-green-800 opacity-50"} 
                     pageRangeDisplayed={2}
-                    marginPagesDisplayed={0}
+                    marginPagesDisplayed={1}
                 />
             </div>
 
